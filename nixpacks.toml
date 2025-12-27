@@ -1,0 +1,61 @@
+[phases.setup]
+nixPkgs = ['python39']
+
+[phases.install]
+cmds = ['cd backend && pip install -r requirements.txt']
+
+[start]
+cmd = 'cd backend && gunicorn app:app --bind 0.0.0.0:$PORT'
+```
+
+5. 点击 **`Commit new file`**
+
+---
+
+## 🔄 第四步: 在Railway重新部署
+
+现在回到Railway:
+
+### 方法A: 手动触发重新部署
+
+1. 在Railway项目页面
+2. 找到你的服务(service)
+3. 点击右上角的 **三个点 (⋮)** 或 **Settings**
+4. 找到 **"Deployments"** 或 **"Deploy"** 选项
+5. 点击 **"Redeploy"** 或 **"Deploy"** 按钮
+
+### 方法B: 通过GitHub触发
+
+Railway会自动监听GitHub更新:
+- 等待1-2分钟,Railway应该会自动检测到新文件
+- 自动开始新的部署
+
+---
+
+## 📋 第五步: 检查部署状态
+
+在Railway页面:
+
+1. 查看 **"Deployments"** 标签
+2. 应该看到一个正在进行的部署
+3. 点击进去可以看到实时日志
+4. 等待显示 **"SUCCESS"** 或 **"Active"**
+
+---
+
+## ⚠️ 如果还是失败,检查这些:
+
+### 检查点1: 文件位置是否正确
+
+你的GitHub仓库结构应该是:
+```
+aso-analytics-platform/
+├── backend/
+│   ├── app.py
+│   ├── requirements.txt
+│   └── Procfile
+├── railway.json
+├── nixpacks.toml
+├── .gitignore
+├── README.md
+└── LICENSE
